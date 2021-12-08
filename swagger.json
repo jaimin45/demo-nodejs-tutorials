@@ -9,7 +9,7 @@
     "basePath": "/",
     "tags": [
       {
-        "name": "Users",
+        "name": "tutorials",
         "description": "API for users in the system"
       }
     ],
@@ -20,15 +20,15 @@
 
   
     "paths": {
-      "/users": {
+      "/tutorials": {
         "get": {
-          "tags": ["Users"],
-          "summary": "Get all users in system",
+          "tags": ["tutorials"],
+          "summary": "Get all tutorials in system",
           "responses": {
             "200": {
               "description": "OK",
               "schema": {
-                "$ref": "#/definitions/Users"
+                "$ref": "#/definitions/tutorials"
               }
             }
           }
@@ -36,17 +36,17 @@
       },
     
 
-    "/addUser": {
+    "/addtutorials": {
         "post": {
-          "tags": ["Users"],
-          "description": "Create new user in system",
+          "tags": ["tutorials"],
+          "description": "Create new tutorial in system",
           "parameters": [
             {
-              "name": "user",
+              "name": "tutorial",
               "in": "body",
               "description": "User that we want to create",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/tutorial"
               }
             }
           ],
@@ -55,52 +55,52 @@
             "200": {
               "description": "New user is created",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/tutorial"
               }
             }
           }
         }
       },
-      "/user": {
+      "/tutorial": {
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "ID of user that we want to find",
+            "description": "ID of tutorial that we want to find",
             "type": "integer"
           }
         ],
         "delete": {
-            "summary": "Delete user with given ID",
-            "tags": ["Users"],
+            "summary": "Delete tutorials with given ID",
+            "tags": ["tutorials"],
             "responses": {
               "200": {
-                "description": "User is deleted",
+                "description": "tutorial is deleted",
                 "schema": {
-                  "$ref": "#/definitions/User"
+                  "$ref": "#/definitions/tutorial"
                 }
               }
             }
           },
         "put": {
-          "summary": "Update user with give ID",
-          "tags": ["Users"],
+          "summary": "Update tutorial with give ID",
+          "tags": ["tutorial"],
           "parameters": [
             {
-              "name": "user",
+              "name": "tutorial",
               "in": "body",
-              "description": "User with new values of properties",
+              "description": "tutorial with new values of properties",
               "schema": {
-                "$ref": "#/definitions/updateUser"
+                "$ref": "#/definitions/updatetutorial"
               }
             }
           ],
           "responses": {
             "200": {
-              "description": "User is updated",
+              "description": "tutorial is updated",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/tutorial"
               }
             }
           }
@@ -111,7 +111,7 @@
     },
 
     "definitions": {
-      "User": {
+      "tutorial": {
         "required": [ "_id", "createdAt","updatedAt"],
         "properties": {
           "_id": {
@@ -151,7 +151,7 @@
           }
         }
       },
-      "updateUser": {
+      "updateUsertutorial": {
         "required": ["_id"],
         "properties": {
           "id": {
