@@ -3,14 +3,14 @@ export const getUserList = () =>  {
         {
             id: 1,
             isPublic: true,
-            name: 'user1',
+            name: 'tutorials',
             companies: ['com1', 'com2', 'com3'],
             books: [{
-                name: 'book1',
+                name: 'tutorials1',
                 amount: 1,
             },
             {
-                name: 'book2',
+                name: 'tutorials2',
                 amount: 200,
              }
         ]
@@ -18,15 +18,15 @@ export const getUserList = () =>  {
     {
             id: 2,
             isPublic: true,
-            name: 'kk',
+            name: 'nodejsBySj',
             companies: ['com1', 'com2', 'com3'],
             books: [
                 {
-                    name: 'kk2',
+                    name: 'tutorials1',
                     amount: 1,
                 },
                 {
-                    name: 'kk2',
+                    name: 'tutorials2',
                     amount: 200,
                 }
            ]
