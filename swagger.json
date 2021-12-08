@@ -1,0 +1,190 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "Tech Holding Classes",
+      "description": "An app to manage Tutorials"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+  
+
+  
+    "paths": {
+      "/users": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get all users in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          }
+        }
+      },
+    
+
+    "/addUser": {
+        "post": {
+          "tags": ["Users"],
+          "description": "Create new user in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": ["application/json"],
+          "responses": {
+            "200": {
+              "description": "New user is created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/user": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of user that we want to find",
+            "type": "integer"
+          }
+        ],
+        "delete": {
+            "summary": "Delete user with given ID",
+            "tags": ["Users"],
+            "responses": {
+              "200": {
+                "description": "User is deleted",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+        "put": {
+          "summary": "Update user with give ID",
+          "tags": ["Users"],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User with new values of properties",
+              "schema": {
+                "$ref": "#/definitions/updateUser"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User is updated",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+      
+
+    },
+
+    "definitions": {
+      "User": {
+        "required": [ "_id", "createdAt","updatedAt"],
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "uniqueItems": true
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt":{
+              "type":"string",
+              "format": "date-time"
+          },
+          "tutor": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "t_Id": {
+                  "type": "string"
+                },
+                "t_Length": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "Created By ": {
+            "type": "array",
+            "video": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "updateUser": {
+        "required": ["_id"],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "created": {
+            "type": "date"
+          },
+          "updatedAt":{
+              "type":"date"
+          },
+          "tutor": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "t_Id": {
+                  "type": "string"
+                },
+                "t_Length": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "companies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+}
+  
