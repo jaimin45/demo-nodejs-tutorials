@@ -7,11 +7,11 @@ export const getUserList = () =>  {
             companies: ['com1', 'com2', 'com3'],
             books: [{
                 name: 'tutorials1',
-                amount: 1,
+                length: 1,
             },
             {
                 name: 'tutorials2',
-                amount: 200,
+                length: 200,
              }
         ]
      }, 
@@ -23,11 +23,11 @@ export const getUserList = () =>  {
             books: [
                 {
                     name: 'tutorials1',
-                    amount: 1,
+                    length: 1,
                 },
                 {
                     name: 'tutorials2',
-                    amount: 200,
+                    length: 200,
                 }
            ]
       }
