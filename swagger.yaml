@@ -1,0 +1,129 @@
+---
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Tech Holding Classes
+  description: An app to manage Tutorials
+host: localhost:8000
+basePath: "/"
+tags:
+- name: tutorials
+  description: API for user in the system
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  "/tutorial":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: ID of tutorial that we want to find
+      type: integer
+    get:
+      tags:
+      - tutorials
+      summary: Get all tutorials in system
+      responses:
+        '200':
+          description: OK
+          schema:
+            "$ref": "#/definitions/tutorials"
+    post:
+      tags:
+      - tutorials
+      description: Create new tutorial in system
+      parameters:
+      - name: tutorial
+        in: body
+        description: User that we want to create
+        schema:
+          "$ref": "#/definitions/tutorial"
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: New user is created
+          schema:
+            "$ref": "#/definitions/tutorial"
+    delete:
+      summary: Delete tutorials with given ID
+      tags:
+      - tutorials
+      responses:
+        '200':
+          description: tutorial is deleted
+          schema:
+            "$ref": "#/definitions/tutorial"
+    put:
+      summary: Update tutorial with give ID
+      tags:
+      - tutorials
+      parameters:
+      - name: tutorial
+        in: body
+        description: tutorial with new values of properties
+        schema:
+          "$ref": "#/definitions/updatetutorial"
+      responses:
+        '200':
+          description: tutorial is updated
+          schema:
+            "$ref": "#/definitions/tutorial"
+definitions:
+  tutorial:
+    required:
+    - _id
+    - createdAt
+    - updatedAt
+    properties:
+      _id:
+        type: integer
+        uniqueItems: true
+      isPublic:
+        type: boolean
+      created:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      tutor:
+        type: array
+        items:
+          type: object
+          properties:
+            t_Id:
+              type: string
+            t_Length:
+              type: number
+      'Created By ':
+        type: array
+        video:
+          type: string
+  updateUsertutorial:
+    required:
+    - _id
+    properties:
+      id:
+        type: integer
+      created:
+        type: date
+      updatedAt:
+        type: date
+      tutor:
+        type: array
+        items:
+          type: object
+          properties:
+            t_Id:
+              type: string
+            t_Length:
+              type: number
+      companies:
+        type: array
+        items:
+          type: string
