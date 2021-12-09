@@ -132,7 +132,7 @@ app.delete("/deleteUser/:id", (req, res) => {
 })
 
 app.use(
-  '/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument)
+  '/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument)  // middle ware :yaml
 );
 
 app.listen(8000, () => {
