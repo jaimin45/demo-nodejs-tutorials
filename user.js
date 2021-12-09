@@ -33,8 +33,6 @@ export const getUserList = () =>  {
       }
    ]
 }
-
-
 export const findUserById = (id) =>{
 const users = getUserList()
    const userFound = users.filter((user) => {
