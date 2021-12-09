@@ -16,7 +16,7 @@ consumes:
 produces:
 - application/json
 paths:
-  "/tutorial":
+  tutorial:
     parameters:
     - name: id
       in: path
@@ -58,7 +58,7 @@ paths:
           description: tutorial is deleted
           schema:
             "$ref": "#/definitions/tutorial"
-    put:
+    patch:
       summary: Update tutorial with give ID
       tags:
       - tutorials
@@ -106,9 +106,9 @@ definitions:
           type: string
   updateUsertutorial:
     required:
-    - _id
+    - uuid
     properties:
-      id:
+      uuid:
         type: integer
       created:
         type: date
