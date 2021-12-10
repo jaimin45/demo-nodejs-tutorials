@@ -3,16 +3,14 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-      "prettier",
-      "airbnb-base"
-    ],
+    "extends": ["plugin:prettier/recommended", "airbnb-base"],
     "parserOptions": {
         "ecmaVersion": 2021,
         "sourceType": "module"
     },
     "plugins": ["prettier", "spellcheck"],
     "rules": {
+      "quotes": "off",
       "prettier/prettier": "error",
       "spellcheck/spell-checker": [2,
         {
