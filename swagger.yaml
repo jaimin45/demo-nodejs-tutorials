@@ -28,10 +28,10 @@ paths:
       - tutorials
       summary: Get all tutorials in system
       responses:
-        '200':
+        200:
           description: OK
           schema:
-            "$ref": "#/definitions/tutorials"
+            $ref: #/definitions/tutorials
     post:
       tags:
       - tutorials
@@ -41,23 +41,23 @@ paths:
         in: body
         description: User that we want to create
         schema:
-          "$ref": "#/definitions/tutorial"
+          $ref: #/definitions/tutorial
       produces:
       - application/json
       responses:
-        '200':
+        200:
           description: New user is created
           schema:
-            "$ref": "#/definitions/tutorial"
+            $ref: #/definitions/tutorial
     delete:
       summary: Delete tutorials with given ID
       tags:
       - tutorials
       responses:
-        '200':
+        200:
           description: tutorial is deleted
           schema:
-            "$ref": "#/definitions/tutorial"
+            $ref: #/definitions/tutorial
     patch:
       summary: Update tutorial with give ID
       tags:
@@ -67,21 +67,21 @@ paths:
         in: body
         description: tutorial with new values of properties
         schema:
-          "$ref": "#/definitions/updatetutorial"
+          $ref: #/definitions/updatetutorial
       responses:
-        '200':
+        200:
           description: tutorial is updated
           schema:
-            "$ref": "#/definitions/tutorial"
+            $ref: #/definitions/tutorial
 definitions:
   tutorial:
     required:
-    - _id
+    - uuid
     - createdAt
     - updatedAt
     properties:
-      _id:
-        type: integer
+      uuid:
+        type: String
         uniqueItems: true
       isPublic:
         type: boolean
@@ -100,7 +100,7 @@ definitions:
               type: string
             t_Length:
               type: number
-      'Created By ':
+      Created By :
         type: array
         video:
           type: string
@@ -109,7 +109,7 @@ definitions:
     - uuid
     properties:
       uuid:
-        type: integer
+        type: String
       created:
         type: date
       updatedAt:
