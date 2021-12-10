@@ -88,7 +88,7 @@ definitions:
         uniqueItems: true
       published:
         type: boolean
-      creatAt:
+      createdAt:
         type: string
         format: date-time
       updatedAt:
