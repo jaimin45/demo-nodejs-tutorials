@@ -9,6 +9,6 @@ app.use(
   '/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerYamlDocument)
 );
 
-app.listen(8000, () => {
+app.listen(3000, () => {
   console.log("server listening on port 8000!");
   });

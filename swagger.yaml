@@ -1,94 +1,93 @@
 ---
-swagger: '2.0'
+swagger: "2.0"
 info:
   version: 1.0.0
   title: Tech Holding Classes
   description: An app to manage Tutorials
-host: localhost:8000
+host: localhost:3000
 basePath: "/"
 tags:
-- name: tutorials
-  description: API for user in the system
+  - name: Tutorials
+    description: API for user in the system
 schemes:
-- http
+  - http
 consumes:
-- application/json
+  - application/json
 produces:
-- application/json
+  - application/json
 paths:
-  tutorial:
+  tutorials:
     parameters:
-    - _id:
-      type: string
-      format: uuid
-      in: path
-      required: true
-      description: ID of tutorial that we want to find
-      type: integer
+      - name: id
+        in: path
+        required: true
+        description: ID of tutorial that we want to find
+        type: string
+        format: uuid
     get:
       tags:
-      - tutorials
+        - Tutorials
       summary: Get all tutorials in system
       responses:
-        '200':
+        "200":
           description: OK
           schema:
-            $ref: '#/definitions/tutorial'
+            $ref: "#/definitions/Tutorial"
     post:
       tags:
-      - tutorials
+        - Tutorials
       description: Create new tutorial in system
       parameters:
-      - name: tutorial
-        in: body
-        description: User that we want to create
-        schema:
-          $ref: '#/definitions/tutorial'
+        - name: Tutorials
+          in: body
+          description: User that we want to create
+          schema:
+            $ref: "#/definitions/Tutorial"
       produces:
-      - application/json
+        - application/json
       responses:
-        '200':
+        "200":
           description: New user is created
           schema:
-            $ref: '#/definitions/tutorial'
+            $ref: "#/definitions/Tutorial"
     delete:
       summary: Delete tutorials with given ID
       tags:
-      - tutorials
+        - Tutorials
       responses:
-        '200':
-          description: tutorial is deleted
+        "200":
+          description: Tutorial is deleted
     patch:
       summary: Update tutorial with give ID
       tags:
-      - tutorials
+        - Tutorials
       parameters:
-      - name: tutorial
-        in: body
-        description: tutorial with new values of properties
-        schema:
-          $ref: '#/definitions/tutorial'
+        - name: Tutorial
+          in: body
+          description: Tutorial with new values of properties
+          schema:
+            $ref: "#/definitions/Tutorial"
       responses:
-        '200':
-          description: tutorial is updated
-    definitions:
-      tutorial:
-        required:
-        - _id
-        - createdAt
-        - updatedAt
-        - published
-        properties:
-          _id:
-            type: string
-            format: uuid
-            uniqueItems: true
-          published:
-            type: boolean
-          createdAt:
-            type: string
-            format: date-time
-          updatedAt:
-            type: string
-            format: date-time
+        "200":
+          description: Tutorial is updated
 
+definitions:
+  Tutorial:
+    required:
+      - _id
+      - createdAt
+      - updatedAt
+      - published
+    properties:
+      _id:
+        type: string
+        format: uuid
+        uniqueItems: true
+      published:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
