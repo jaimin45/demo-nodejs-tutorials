@@ -12,13 +12,15 @@ tags:
 schemes:
 - http
 consumes:
-- application/yaml
+- application/json
 produces:
-- application/yaml
+- application/json
 paths:
   tutorial:
     parameters:
-    - name: id
+    - _id:
+      type: string
+      format: uuid
       in: path
       required: true
       description: ID of tutorial that we want to find
@@ -43,7 +45,7 @@ paths:
         schema:
           $ref: '#/definitions/tutorial'
       produces:
-      - application/yaml
+      - application/json
       responses:
         '200':
           description: New user is created
@@ -76,16 +78,17 @@ paths:
 definitions:
   tutorial:
     required:
-    - UUID
+    - _id
     - createdAt
     - updatedAt
     properties:
-      UUID:
-        type: String
+      _id:
+        type: string
+        format: uuid
         uniqueItems: true
-      isPublic:
+      published:
         type: boolean
-      created:
+      creatAt:
         type: string
         format: date-time
       updatedAt:
