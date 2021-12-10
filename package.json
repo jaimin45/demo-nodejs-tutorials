@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: notest specified\" && exit 1",
+    "test": "echo \"Error: notest specified\"",
     "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
-    "lint": "eslint src/js"
+    "lint": "eslint .",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +26,20 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.7.0",
-    "nodemon": "^2.0.15"
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-formatter-table": "^7.32.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-spellcheck": "^0.0.19",
+    "eslint-plugin-yml": "^0.12.0",
+    "husky": "^7.0.4",
+    "nodemon": "^2.0.15",
+    "prettier": "2.5.1"
   }
 }
