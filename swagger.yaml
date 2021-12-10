@@ -58,8 +58,6 @@ paths:
       responses:
         '200':
           description: tutorial is deleted
-          schema:
-            $ref: '#/definitions/tutorial'
     patch:
       summary: Update tutorial with give ID
       tags:
@@ -73,25 +71,24 @@ paths:
       responses:
         '200':
           description: tutorial is updated
-          schema:
-            $ref: '#/definitions/tutorial'
-definitions:
-  tutorial:
-    required:
-    - _id
-    - createdAt
-    - updatedAt
-    properties:
-      _id:
-        type: string
-        format: uuid
-        uniqueItems: true
-      published:
-        type: boolean
-      createdAt:
-        type: string
-        format: date-time
-      updatedAt:
-        type: string
-        format: date-time
+    definitions:
+      tutorial:
+        required:
+        - _id
+        - createdAt
+        - updatedAt
+        - published
+        properties:
+          _id:
+            type: string
+            format: uuid
+            uniqueItems: true
+          published:
+            type: boolean
+          createdAt:
+            type: string
+            format: date-time
+          updatedAt:
+            type: string
+            format: date-time
 
