@@ -1,15 +1,11 @@
-import bodyParser from 'body-parser';
-import { getUserList ,findUserById } from "./user";
 const express = require("express");
 const app = express();
 const swaggerUi = require("swagger-ui-express");
-const userList = getUserList(); // assume for now this is your database
 const swaggerYaml = require('yamljs');
 const swaggerYamlDocument  = swaggerYaml.load('./swagger.yaml'); 
 
 
 app.use(
-  //'/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument) 
   '/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerYamlDocument)
 );
 
