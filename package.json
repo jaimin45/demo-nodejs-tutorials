@@ -5,8 +5,14 @@
   "main": "server.js",
   "husky": {
     "hooks": {
-      "pre-commit": "lint"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "scripts": {
     "test": "echo \"Error: notest specified\"",
@@ -40,6 +46,7 @@
     "eslint-plugin-spellcheck": "^0.0.19",
     "eslint-plugin-yml": "^0.12.0",
     "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
     "nodemon": "^2.0.15",
     "prettier": "2.5.1"
   }
