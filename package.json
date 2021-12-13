@@ -8,15 +8,17 @@
       "pre-commit": "lint-staged"
     }
   },
-  "lint-staged":{
-    "*.js":["./node_modules/.bin/eslint — fix”, “git add"]
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "scripts": {
     "test": "echo \"Error: notest specified\"",
     "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
     "lint": "eslint .",
     "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix"
-
   },
   "author": "",
   "license": "ISC",
