@@ -17,8 +17,8 @@
   "scripts": {
     "test": "echo \"Error: notest specified\"",
     "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
-    // "lint": "eslint .",
-    // "prepare": "husky install"
+    "lint": "eslint .",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
