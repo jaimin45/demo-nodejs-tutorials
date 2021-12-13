@@ -1,0 +1,48 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": ["plugin:prettier/recommended", "airbnb-base"],
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+    },
+    "plugins": ["prettier", "spellcheck"],
+    "rules": {
+      "quotes": "off",
+      "prettier/prettier": "error",
+      "spellcheck/spell-checker": [2,
+        {
+            "comments": true,
+            "strings": true,
+            "identifiers": true,
+            "templates": true,
+            "lang": "en_US",
+            "skipWords": [
+                "dict",
+                "aff",
+                "hunspellchecker",
+                "hunspell",
+                "utils",
+                "yaml",
+                "yamljs"
+            ],
+            "skipIfMatch": [
+                "http://[^s]*",
+                "^[-\\w]+\/[-\\w\\.]+$"
+            ],
+            "skipWordIfMatch": [
+                "^foobar.*$"
+            ],
+            "minLength": 3
+         }
+     ]
+    },
+    "overrides": [
+      {
+        "files": ["*.yaml", "*.yml"],
+        "parser": "yaml-eslint-parser"
+      }
+    ]
+}
