@@ -16,6 +16,7 @@
     "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
     "lint": "eslint .",
     "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix"
+
   },
   "author": "",
   "license": "ISC",
