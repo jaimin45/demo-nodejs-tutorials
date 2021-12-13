@@ -3,7 +3,7 @@ info:
   version: "1.0"
   title: THClasses
   description: An app to manage Tutorials
-host: localhost:300
+host: localhost:3000
 basePath: /
 tags:
   - name: Tutorials
