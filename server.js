@@ -10,5 +10,5 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerYamlDocument));
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
-  console.log("server listening on port 8000!sj ")
+  console.log("server listening on port 8000! ");
 });
