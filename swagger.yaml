@@ -1,6 +1,6 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  version: '1.0'
+  version: "1.0"
   title: My tutorial project
   description: An app to manage Tutorials
 host: localhost:3000
@@ -28,10 +28,10 @@ paths:
         - Tutorials
       summary: Get all tutorials in system
       responses:
-        '200':
+        "200":
           description: OK
           schema:
-            $ref: '#/definitions/Tutorial'
+            $ref: "#/definitions/Tutorial"
     post:
       summary: Create tutorials in system
       tags:
@@ -41,20 +41,20 @@ paths:
           in: body
           description: User that we want to create
           schema:
-            $ref: '#/definitions/Tutorial'
+            $ref: "#/definitions/Tutorial"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: New user is created
           schema:
-            $ref: '#/definitions/Tutorial'
+            $ref: "#/definitions/Tutorial"
     delete:
       summary: Delete tutorials with given ID
       tags:
         - Tutorials
       responses:
-        '200':
+        "200":
           description: Tutorial is deleted
     patch:
       summary: Update tutorial with give ID
@@ -65,9 +65,9 @@ paths:
           in: body
           description: Tutorial with new values of properties
           schema:
-            $ref: '#/definitions/Tutorial'
+            $ref: "#/definitions/Tutorial"
       responses:
-        '200':
+        "200":
           description: Tutorial is updated
 definitions:
   Tutorial:

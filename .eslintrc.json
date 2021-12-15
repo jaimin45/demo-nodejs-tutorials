@@ -11,6 +11,7 @@
     "plugins": ["prettier", "spellcheck"],
     "rules": {
       "quotes": "off",
+      "no-console": "off",
       "prettier/prettier": "error",
       "spellcheck/spell-checker": [2,
         {
