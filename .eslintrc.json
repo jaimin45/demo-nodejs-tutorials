@@ -12,7 +12,8 @@
     "rules": {
       "quotes": "off",
       "no-console": "off",
-      "prettier/prettier": "error",
+      "new-cap": 0,
+      "no-underscore-dangle": "off",
       "spellcheck/spell-checker": [2,
         {
             "comments": true,
@@ -21,13 +22,19 @@
             "templates": true,
             "lang": "en_US",
             "skipWords": [
-                "dict",
                 "aff",
                 "hunspellchecker",
                 "hunspell",
                 "utils",
                 "yaml",
-                "yamljs"
+                "yamljs",
+                "urlencoded",
+                "_req",
+                "req",
+                "mongodb",
+                "localhost",
+                "nodejs",
+                "syscall"
             ],
             "skipIfMatch": [
                 "http://[^s]*",

@@ -1,10 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable new-cap */
-/* eslint-disable no-unused-vars */
-/* eslint-disable spellcheck/spell-checker */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable import/extensions */
 import createError from "http-errors";
 import express from "express";
 import path from "path";
@@ -12,25 +5,26 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import swaggerUI from "swagger-ui-express";
 import swaggerYaml from "yamljs";
-import mangoose from "mongoose";
+import mongoose from "mongoose";
 import console from "console";
-import indexRouter from "./routes/index.js";
-import usersRouter from "./routes/users.js";
+import indexRouter from "./routes/index";
+import usersRouter from "./routes/users";
 
 const __dirname = path.resolve();
+
 const app = express();
 const swaggerDoc = swaggerYaml.load("./swagger.yaml");
 
-// mongoose conn
-mangoose
+// mongoose connection
+mongoose
   .connect("mongodb://localhost:27017/tutorials", {
     useNewUrlParser: true,
   })
-  .then(() => console.log("Connection successfull........"))
-  .catch((err) => console.log);
+  .then(() => console.log("Connection success......."))
+  .catch(() => console.log);
 
 // Schema
-const tutorialSchema = new mangoose.Schema({
+const tutorialSchema = new mongoose.Schema({
   id: {
     type: String,
     required: true,
@@ -52,7 +46,7 @@ const tutorialSchema = new mangoose.Schema({
 });
 
 // collection creation (model)
-const Tutorial = new mangoose.model("Tutorial", tutorialSchema);
+const Tutorial = new mongoose.model("Tutorial", tutorialSchema);
 
 // create Document or insert
 const createDocument = async () => {

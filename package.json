@@ -24,15 +24,13 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
+    "yamljs": "^0.3.0",
     "express": "~4.16.1",
+    "debug": "~2.6.9",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
     "mongoose": "^6.1.2",
     "morgan": "~1.9.1",
-    "swagger-ui-express": "^4.2.0",
-    "yaml-eslint-parser": "^0.5.0",
-    "yamljs": "^0.3.0"
+    "swagger-ui-express": "^4.2.0"
   },
   "devDependencies": {
     "eslint": "^8.4.1",
@@ -50,7 +48,9 @@
     "husky": "^7.0.0",
     "lint-staged": "^12.1.2",
     "nodemon": "^2.0.15",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "jade": "~1.11.0",
+    "yaml-eslint-parser": "^0.5.0"
   },
   "author": "",
   "license": "ISC",
