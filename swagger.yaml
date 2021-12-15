@@ -1,0 +1,91 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: My tutorial project
+  description: An app to manage Tutorials
+host: localhost:3000
+basePath: /
+tags:
+  - name: Tutorials
+    description: API for user in the system
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /tutorials:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the tutorial that we want to find
+        type: string
+        format: uuid
+    get:
+      tags:
+        - Tutorials
+      summary: Get all tutorials in system
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Tutorial'
+    post:
+      summary: Create tutorials in system
+      tags:
+        - Tutorials
+      parameters:
+        - name: Tutorials
+          in: body
+          description: User that we want to create
+          schema:
+            $ref: '#/definitions/Tutorial'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: New user is created
+          schema:
+            $ref: '#/definitions/Tutorial'
+    delete:
+      summary: Delete tutorials with given ID
+      tags:
+        - Tutorials
+      responses:
+        '200':
+          description: Tutorial is deleted
+    patch:
+      summary: Update tutorial with give ID
+      tags:
+        - Tutorials
+      parameters:
+        - name: Tutorial
+          in: body
+          description: Tutorial with new values of properties
+          schema:
+            $ref: '#/definitions/Tutorial'
+      responses:
+        '200':
+          description: Tutorial is updated
+definitions:
+  Tutorial:
+    required:
+      - _id
+      - createdAt
+      - updatedAt
+      - published
+    properties:
+      _id:
+        type: string
+        format: uuid
+        uniqueItems: true
+      published:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
