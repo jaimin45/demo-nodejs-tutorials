@@ -2,7 +2,6 @@
   "name": "repo",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "main": "./bin/www.js",
   "husky": {
     "hooks": {
@@ -17,7 +16,7 @@
   },
   "scripts": {
     "test": "echo \"Error: notest specified\"",
-    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node ./bin/www",
+    "start": "nodemon ./bin/www",
     "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
     "pretest": "npm run lint",
     "prepare": "husky install"

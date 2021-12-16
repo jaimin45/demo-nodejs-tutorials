@@ -1,5 +1,4 @@
-/* eslint-disable spellcheck/spell-checker */
-import express from "express";
+const express = require("express");
 
 const router = express.Router();
 
@@ -8,4 +7,4 @@ router.get("/", (_req, res) => {
   res.render("index", { title: "Express" });
 });
 
-export default router;
+module.exports = router;

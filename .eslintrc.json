@@ -34,7 +34,8 @@
                 "mongodb",
                 "localhost",
                 "nodejs",
-                "syscall"
+                "syscall",
+                "morgan"
             ],
             "skipIfMatch": [
                 "http://[^s]*",

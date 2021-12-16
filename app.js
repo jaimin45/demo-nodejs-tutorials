@@ -1,16 +1,14 @@
-import createError from "http-errors";
-import express from "express";
-import path from "path";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
-import swaggerUI from "swagger-ui-express";
-import swaggerYaml from "yamljs";
-import mongoose from "mongoose";
-import console from "console";
-import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
-
-const __dirname = path.resolve();
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const swaggerUI = require("swagger-ui-express");
+const swaggerYaml = require("yamljs");
+const mongoose = require("mongoose");
+const console = require("console");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
 
 const app = express();
 const swaggerDoc = swaggerYaml.load("./swagger.yaml");
@@ -92,4 +90,4 @@ app.use((err, req, res) => {
   res.render("error");
 });
 
-export default app;
+module.exports = app;
