@@ -5,63 +5,12 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const swaggerUI = require("swagger-ui-express");
 const swaggerYaml = require("yamljs");
-const mongoose = require("mongoose");
-const console = require("console");
+const { promise } = require("./init/db");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
 const app = express();
 const swaggerDoc = swaggerYaml.load("./swagger.yaml");
-
-// mongoose connection
-mongoose
-  .connect("mongodb://localhost:27017/tutorials", {
-    useNewUrlParser: true,
-  })
-  .then(() => console.log("Connection success......."))
-  .catch(() => console.log);
-
-// Schema
-const tutorialSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-  },
-  published: {
-    type: Boolean,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-    required: true,
-  },
-});
-
-// collection creation (model)
-const Tutorial = new mongoose.model("Tutorial", tutorialSchema);
-
-// create Document or insert
-const createDocument = async () => {
-  try {
-    const demoTutorial = new Tutorial({
-      id: "1",
-      published: true,
-    });
-
-    const result = await demoTutorial.save();
-    console.log(result);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-createDocument();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -74,6 +23,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+// connection message
+// eslint-disable-next-line no-console
+promise.then(() => console.log("Connection success......."));
 
 // catch 404 and forward to error handle
 app.use((_req, _res, next) => {
