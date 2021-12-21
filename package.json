@@ -1,25 +1,57 @@
 {
-  "name": "express-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
-    "lint": "eslint src/js"
+  "name": "repo",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./bin/www.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
-  "author": "",
-  "license": "ISC",
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: notest specified\"",
+    "start": "nodemon ./bin/www",
+    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore .",
+    "pretest": "npm run lint",
+    "prepare": "husky install"
+  },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.4",
+    "cookie-parser": "~1.4.4",
+    "yamljs": "^0.3.0",
+    "express": "~4.16.1",
+    "debug": "~2.6.9",
+    "http-errors": "~1.6.3",
+    "mongoose": "^6.1.2",
+    "morgan": "~1.9.1",
     "swagger-ui-express": "^4.2.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.1.0",
-    "babel-preset-env": "^1.7.0"
-  }
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-formatter-table": "^7.32.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-spellcheck": "^0.0.19",
+    "eslint-plugin-yml": "^0.12.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^12.1.2",
+    "nodemon": "^2.0.15",
+    "prettier": "2.5.1",
+    "jade": "~1.11.0",
+    "yaml-eslint-parser": "^0.5.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
