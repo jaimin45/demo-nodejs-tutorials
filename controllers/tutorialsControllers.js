@@ -15,10 +15,7 @@ const tutorialsAll = async (req, res) => {
 // Add new Tutorials
 const tutorialsCreate = async (req, res) => {
   const tutorial = new Tutorial({
-    id: req.body.id,
     published: req.body.published,
-    createdAt: req.body.createdAt,
-    updatedAt: req.body.updatedAt,
   });
   try {
     const savedTutorial = await tutorial.save();
@@ -35,8 +32,7 @@ const updateTutorials = async (req, res) => {
     const { options } = { new: true };
     const tutorialUpdate = await Tutorial.findByIdAndUpdate(
       { _id: req.params.tutorialId },
-      { id: req.body.id },
-      // { published: req.body.published },
+      { published: req.body.published },
       update,
       options
     );
@@ -64,7 +60,7 @@ const tutorialSearchById = async (req, res) => {
     const tutorials = await Tutorial.findById(req.params.tutorialId);
     res.json(tutorials);
   } catch (error) {
-    res.json({ message: error });
+    res.status(400).send(error);
   }
 };
 

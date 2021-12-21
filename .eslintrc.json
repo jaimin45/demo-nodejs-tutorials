@@ -35,7 +35,8 @@
                 "localhost",
                 "nodejs",
                 "syscall",
-                "morgan"
+                "morgan",
+                "timestamps"
             ],
             "skipIfMatch": [
                 "http://[^s]*",
