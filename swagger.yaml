@@ -7,7 +7,7 @@ host: localhost:3000
 basePath: /
 tags:
   - name: Tutorials
-    description: API for user in the system
+    description: API for Tutorials in the system
 schemes:
   - http
 consumes:
@@ -16,13 +16,6 @@ produces:
   - application/json
 paths:
   /tutorials:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: ID of the tutorial that we want to find
-        type: string
-        format: uuid
     get:
       tags:
         - Tutorials
@@ -34,6 +27,12 @@ paths:
             $ref: "#/definitions/Tutorial"
         "404":
           description: "Not found"
+          schema:
+            $ref: "#/definitions/404Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
 
     post:
       summary: Create tutorials in system
@@ -48,39 +47,57 @@ paths:
       produces:
         - application/json
       responses:
-        "200":
-          description: New user is created
+        "201":
+          description: New tutorials is created
           schema:
             $ref: "#/definitions/Tutorial"
-        "405":
-          description: "Invalid input"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
 
-  /tutorials/{id}:
+  /tutorial/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the tutorial that we want to find
+        type: string
+        format: uuid
+
     delete:
       summary: Delete tutorial with given ID
       tags:
         - Tutorials
       responses:
-        "204":
+        "200":
           description: Tutorial is deleted
         "400":
-          description: "Invalid ID tutorial"
+          description: "Invalid Tutorial Id"
+          schema:
+            $ref: "#/definitions/400Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
 
     patch:
       summary: Update tutorial with give ID
       tags:
         - Tutorials
-      parameters:
-        - name: title
-          in: body
-          description: Tutorial with new values of properties
+      responses:
+        "201":
+          description: Tutorial is updated
           schema:
             $ref: "#/definitions/Tutorial"
-      responses:
-        "200":
-          description: Tutorial is updated
+        "400":
+          description: "Invalid Tutorial Id"
+          schema:
+            $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
     get:
       tags:
         - Tutorials
@@ -90,6 +107,14 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/Tutorial"
+        "404":
+          description: "Not found"
+          schema:
+            $ref: "#/definitions/404Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
 
 definitions:
   Tutorial:
@@ -117,3 +142,27 @@ definitions:
       updatedAt:
         type: string
         format: date-time
+
+  500Response:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+
+  404Response:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+
+  400Response:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string

@@ -1,17 +1,16 @@
 const router = require("express").Router();
 const {
-  tutorialsAll,
-  tutorialSearchById,
-  tutorialsCreate,
-  updateTutorials,
-  deleteTutorials,
+  getTutorials,
+  getTutorialById,
+  createTutorial,
+  updateTutorial,
+  deleteTutorial,
 } = require("../controllers/tutorialsControllers");
 
-/* GET users listing. */
-router.get("/", tutorialsAll);
-router.get("/:Id", tutorialSearchById);
-router.post("/", tutorialsCreate);
-router.patch("/:Id", updateTutorials);
-router.delete("/:Id", deleteTutorials);
+router.get("/", getTutorials);
+router.get("/:id", getTutorialById);
+router.post("/", createTutorial);
+router.patch("/:id", updateTutorial);
+router.delete("/:id", deleteTutorial);
 
 module.exports = router;
