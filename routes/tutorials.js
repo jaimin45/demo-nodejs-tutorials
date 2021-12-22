@@ -9,9 +9,9 @@ const {
 
 /* GET users listing. */
 router.get("/", tutorialsAll);
-router.get("/:tutorialId", tutorialSearchById);
+router.get("/:Id", tutorialSearchById);
 router.post("/", tutorialsCreate);
-router.put("/:tutorialId", updateTutorials);
-router.delete("/:tutorialId", deleteTutorials);
+router.patch("/:Id", updateTutorials);
+router.delete("/:Id", deleteTutorials);
 
 module.exports = router;

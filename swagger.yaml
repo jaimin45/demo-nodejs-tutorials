@@ -32,6 +32,9 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/Tutorial"
+        "404":
+          description: "Not found"
+
     post:
       summary: Create tutorials in system
       tags:
@@ -49,19 +52,26 @@ paths:
           description: New user is created
           schema:
             $ref: "#/definitions/Tutorial"
+        "405":
+          description: "Invalid input"
+
+  /tutorials/{id}:
     delete:
-      summary: Delete tutorials with given ID
+      summary: Delete tutorial with given ID
       tags:
         - Tutorials
       responses:
-        "200":
+        "204":
           description: Tutorial is deleted
+        "400":
+          description: "Invalid ID tutorial"
+
     patch:
       summary: Update tutorial with give ID
       tags:
         - Tutorials
       parameters:
-        - name: Tutorial
+        - name: title
           in: body
           description: Tutorial with new values of properties
           schema:
@@ -69,10 +79,24 @@ paths:
       responses:
         "200":
           description: Tutorial is updated
+        "500":
+          description: "Internal Server Error"
+    get:
+      tags:
+        - Tutorials
+      summary: Get tutorials By ID
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Tutorial"
+
 definitions:
   Tutorial:
     required:
       - _id
+      - title
+      - description
       - createdAt
       - updatedAt
       - published
@@ -81,6 +105,10 @@ definitions:
         type: string
         format: uuid
         uniqueItems: true
+      title:
+        type: string
+      description:
+        type: string
       published:
         type: boolean
       createdAt:
