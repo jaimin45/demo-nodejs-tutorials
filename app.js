@@ -6,8 +6,6 @@ const logger = require("morgan");
 const swaggerUI = require("swagger-ui-express");
 const swaggerYaml = require("yamljs");
 const { promise } = require("./init/db");
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 const userTutorial = require("./routes/tutorials");
 
 const app = express();
@@ -22,8 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/tutorial", userTutorial);
 
 // connection message

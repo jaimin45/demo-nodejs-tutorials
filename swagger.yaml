@@ -43,14 +43,14 @@ paths:
           in: body
           description: User that we want to create
           schema:
-            $ref: "#/definitions/Tutorial"
+            $ref: "#/definitions/TutorialCreateBody"
       produces:
         - application/json
       responses:
         "201":
           description: New tutorials is created
           schema:
-            $ref: "#/definitions/Tutorial"
+            $ref: "#/definitions/TutorialCreateBody"
         "500":
           description: "Internal Server Error"
           schema:
@@ -61,10 +61,9 @@ paths:
       - name: id
         in: path
         required: true
-        description: ID of the tutorial that we want to find
+        description: ID of the tutorial
         type: string
         format: uuid
-
     delete:
       summary: Delete tutorial with given ID
       tags:
@@ -86,14 +85,14 @@ paths:
       tags:
         - Tutorials
       responses:
-        "201":
+        "204":
           description: Tutorial is updated
           schema:
             $ref: "#/definitions/Tutorial"
         "400":
           description: "Invalid Tutorial Id"
           schema:
-            $ref: "#/definitions/404Response"
+            $ref: "#/definitions/400Response"
         "500":
           description: "Internal Server Error"
           schema:
@@ -101,7 +100,7 @@ paths:
     get:
       tags:
         - Tutorials
-      summary: Get tutorials By ID
+      summary: Get tutorial By ID
       responses:
         "200":
           description: OK
@@ -143,26 +142,36 @@ definitions:
         type: string
         format: date-time
 
+  TutorialCreateBody:
+    required:
+      - title
+      - description
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+
   500Response:
-      type: object
-      required:
-        - message
-      properties:
-        message:
-          type: string
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
 
   404Response:
-      type: object
-      required:
-        - message
-      properties:
-        message:
-          type: string
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
 
   400Response:
-      type: object
-      required:
-        - message
-      properties:
-        message:
-          type: string
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string

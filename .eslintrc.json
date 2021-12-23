@@ -11,10 +11,7 @@
     "plugins": ["prettier", "spellcheck"],
     "rules": {
       "quotes": "off",
-      "new-cap": 0,
-      "no-unused-vars": "off",
       "comma-dangle":"off",
-      "no-underscore-dangle": "off",
       "spellcheck/spell-checker": [2,
         {
             "comments": true,
