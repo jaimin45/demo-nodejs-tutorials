@@ -15,7 +15,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /tutorials:
+  /tutorial:
     get:
       tags:
         - Tutorials
@@ -25,15 +25,10 @@ paths:
           description: OK
           schema:
             $ref: "#/definitions/Tutorial"
-        "404":
-          description: "Not found"
-          schema:
-            $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-
     post:
       summary: Create tutorials in system
       tags:
@@ -63,18 +58,19 @@ paths:
         required: true
         description: ID of the tutorial
         type: string
-        format: uuid
     delete:
       summary: Delete tutorial with given ID
       tags:
         - Tutorials
       responses:
         "200":
-          description: Tutorial is deleted
-        "400":
+          description: OK
+          schema:
+            $ref: "#/definitions/Tutorial"
+        "404":
           description: "Invalid Tutorial Id"
           schema:
-            $ref: "#/definitions/400Response"
+            $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
@@ -84,6 +80,12 @@ paths:
       summary: Update tutorial with give ID
       tags:
         - Tutorials
+      parameters:
+        - name: Tutorials
+          in: body
+          description: User that we want to create
+          schema:
+            $ref: "#/definitions/TutorialCreateBody"
       responses:
         "204":
           description: Tutorial is updated
@@ -146,11 +148,14 @@ definitions:
     required:
       - title
       - description
+      - published
     properties:
       title:
         type: string
       description:
         type: string
+      published:
+        type: boolean
 
   500Response:
     type: object
