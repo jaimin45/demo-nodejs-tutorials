@@ -1,0 +1,182 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: My tutorial project
+  description: An app to manage Tutorials
+host: localhost:3000
+basePath: /
+tags:
+  - name: Tutorials
+    description: API for Tutorials in the system
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /tutorial:
+    get:
+      tags:
+        - Tutorials
+      summary: Get all tutorials in system
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Tutorial"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+    post:
+      summary: Create tutorials in system
+      tags:
+        - Tutorials
+      parameters:
+        - name: Tutorials
+          in: body
+          description: User that we want to create
+          schema:
+            $ref: "#/definitions/TutorialCreateBody"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: New tutorials is created
+          schema:
+            $ref: "#/definitions/TutorialCreateBody"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+
+  /tutorial/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the tutorial
+        type: string
+    delete:
+      summary: Delete tutorial with given ID
+      tags:
+        - Tutorials
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Tutorial"
+        "404":
+          description: "Invalid Tutorial Id"
+          schema:
+            $ref: "#/definitions/404Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+
+    patch:
+      summary: Update tutorial with give ID
+      tags:
+        - Tutorials
+      parameters:
+        - name: Tutorials
+          in: body
+          description: User that we want to create
+          schema:
+            $ref: "#/definitions/TutorialCreateBody"
+      responses:
+        "204":
+          description: Tutorial is updated
+          schema:
+            $ref: "#/definitions/Tutorial"
+        "400":
+          description: "Invalid Tutorial Id"
+          schema:
+            $ref: "#/definitions/400Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+    get:
+      tags:
+        - Tutorials
+      summary: Get tutorial By ID
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Tutorial"
+        "404":
+          description: "Not found"
+          schema:
+            $ref: "#/definitions/404Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+
+definitions:
+  Tutorial:
+    required:
+      - _id
+      - title
+      - description
+      - createdAt
+      - updatedAt
+      - published
+    properties:
+      _id:
+        type: string
+        format: uuid
+        uniqueItems: true
+      title:
+        type: string
+      description:
+        type: string
+      published:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+  TutorialCreateBody:
+    required:
+      - title
+      - description
+      - published
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      published:
+        type: boolean
+
+  500Response:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
+  404Response:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
+  400Response:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
