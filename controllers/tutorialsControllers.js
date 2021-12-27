@@ -1,5 +1,6 @@
 const { CastError } = require("mongoose");
 const Tutorial = require("../models/tutorials");
+const { schema } = require("../validations/tutorialsValidate");
 
 // get All Tutorials
 const getTutorials = async (req, res) => {
@@ -21,6 +22,8 @@ const createTutorial = async (req, res) => {
     published: req.body.published,
   });
   try {
+    await schema.validateAsync(req.body);
+
     await tutorial.save();
     res.status(201).send();
   } catch (error) {
@@ -43,6 +46,7 @@ const updateTutorial = async (req, res) => {
         new: true,
       }
     );
+    await schema.validateAsync(req.body);
 
     if (tutorial === null) {
       res.status(400).send({ message: "Invalid Tutorial Id" });

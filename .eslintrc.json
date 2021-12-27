@@ -34,7 +34,8 @@
                 "nodejs",
                 "syscall",
                 "morgan",
-                "timestamps"
+                "timestamps",
+                "joi"
             ],
             "skipIfMatch": [
                 "http://[^s]*",
