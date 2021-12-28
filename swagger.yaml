@@ -46,6 +46,10 @@ paths:
           description: New tutorials is created
           schema:
             $ref: "#/definitions/TutorialCreateBody"
+        "400":
+          description: "Invalid Tutorial Id"
+          schema:
+            $ref: "#/definitions/400Response"
         "500":
           description: "Internal Server Error"
           schema:

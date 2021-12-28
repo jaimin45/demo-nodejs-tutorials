@@ -1,6 +1,6 @@
 const { CastError } = require("mongoose");
 const Tutorial = require("../models/tutorials");
-const { schema } = require("../validations/tutorialsValidate");
+const { postTutorialSchema } = require("../validations/tutorials.validations");
 
 // get All Tutorials
 const getTutorials = async (req, res) => {
@@ -22,11 +22,15 @@ const createTutorial = async (req, res) => {
     published: req.body.published,
   });
   try {
-    await schema.validateAsync(req.body);
+    await postTutorialSchema.validateAsync(req.body);
     await tutorial.save();
     res.status(201).send();
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    if (error) {
+      res.status(400).send({ message: "Invalid Tutorial Details" });
+    } else {
+      res.status(500).send({ message: "Internal Server Error" });
+    }
   }
 };
 
@@ -34,17 +38,17 @@ const createTutorial = async (req, res) => {
 const updateTutorial = async (req, res) => {
   try {
     const { title, description, published } = req.body;
+    const { error, body: tutorialBody } = postTutorialSchema.validate(req.body);
     const update = {};
     if (typeof title !== "undefined") update.title = title;
     if (typeof description !== "undefined") update.description = description;
     if (typeof published !== "undefined") update.published = published;
-    await schema.validateAsync(req.body);
     const tutorial = await Tutorial.findByIdAndUpdate(
       { _id: req.params.id },
       update,
-      {
-        new: true,
-      }
+      tutorialBody,
+      error,
+      { new: true }
     );
 
     if (tutorial === null) {
@@ -53,8 +57,8 @@ const updateTutorial = async (req, res) => {
       res.status(204).send();
     }
   } catch (error) {
-    if (error instanceof CastError) {
-      res.status(400).send({ message: "Invalid Tutorial Id" });
+    if (error) {
+      res.status(400).send({ message: "Invalid details" });
     } else {
       res.status(500).send({ message: "Internal Server Error" });
     }
