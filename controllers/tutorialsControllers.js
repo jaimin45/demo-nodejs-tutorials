@@ -23,7 +23,7 @@ const createTutorial = async (req, res) => {
   });
   try {
     const { error } = postTutorialSchema.validate(req.body);
-    if (error) {
+    if (error instanceof CastError) {
       return res.status(400).send({ message: error.message });
     }
     await postTutorialSchema.validateAsync(req.body);
