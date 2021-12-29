@@ -36,7 +36,7 @@ paths:
       parameters:
         - name: Tutorials
           in: body
-          description: User that we want to create
+          description: Tutorial that we want to create
           schema:
             $ref: "#/definitions/TutorialCreateBody"
       produces:
@@ -46,6 +46,10 @@ paths:
           description: New tutorials is created
           schema:
             $ref: "#/definitions/TutorialCreateBody"
+        "400":
+          description: "Invalid Tutorial Id"
+          schema:
+            $ref: "#/definitions/400Response"
         "500":
           description: "Internal Server Error"
           schema:
@@ -68,7 +72,7 @@ paths:
           schema:
             $ref: "#/definitions/Tutorial"
         "404":
-          description: "Invalid Tutorial Id"
+          description: "Tutorial not found"
           schema:
             $ref: "#/definitions/404Response"
         "500":
@@ -83,7 +87,7 @@ paths:
       parameters:
         - name: Tutorials
           in: body
-          description: User that we want to create
+          description: Tutorial that we want to Update
           schema:
             $ref: "#/definitions/TutorialCreateBody"
       responses:
@@ -95,6 +99,10 @@ paths:
           description: "Invalid Tutorial Id"
           schema:
             $ref: "#/definitions/400Response"
+        "404":
+          description: "Tutorial not found"
+          schema:
+            $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
@@ -109,7 +117,7 @@ paths:
           schema:
             $ref: "#/definitions/Tutorial"
         "404":
-          description: "Not found"
+          description: "Tutorial not found"
           schema:
             $ref: "#/definitions/404Response"
         "500":
