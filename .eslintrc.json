@@ -35,7 +35,9 @@
                 "syscall",
                 "morgan",
                 "timestamps",
-                "joi"
+                "joi",
+                "winston",
+                "maxsize"
             ],
             "skipIfMatch": [
                 "http://[^s]*",

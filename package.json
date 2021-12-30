@@ -22,6 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -30,6 +31,7 @@
     "mongoose": "^6.1.2",
     "morgan": "~1.9.1",
     "swagger-ui-express": "^4.2.0",
+    "winston": "^3.3.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

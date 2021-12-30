@@ -7,6 +7,7 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerYaml = require("yamljs");
 const { promise } = require("./init/db");
 const userTutorial = require("./routes/tutorials");
+const loggerWinston = require("./config/winston");
 
 const app = express();
 const swaggerDoc = swaggerYaml.load("./swagger.yaml");
@@ -23,8 +24,11 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use("/tutorial", userTutorial);
 
 // connection message
-// eslint-disable-next-line no-console
-promise.then(() => console.log("Connection success......."));
+if (promise) {
+  loggerWinston.tutorialLogger.log("info", "Connection success");
+} else {
+  loggerWinston.tutorialLogger.log("error", "Connection unsuccessful");
+}
 
 // catch 404 and forward to error handle
 app.use((_req, _res, next) => {
