@@ -2,12 +2,12 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const morgan = require("morgan");
 const swaggerUI = require("swagger-ui-express");
 const swaggerYaml = require("yamljs");
 const { promise } = require("./init/db");
 const userTutorial = require("./routes/tutorials");
-const loggerWinston = require("./config/winston");
+const logger = require("./config/winston");
 
 const app = express();
 const swaggerDoc = swaggerYaml.load("./swagger.yaml");
@@ -15,7 +15,7 @@ const swaggerDoc = swaggerYaml.load("./swagger.yaml");
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -24,11 +24,9 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use("/tutorial", userTutorial);
 
 // connection message
-if (promise) {
-  loggerWinston.tutorialLogger.log("info", "Connection success");
-} else {
-  loggerWinston.tutorialLogger.log("error", "Connection unsuccessful");
-}
+promise
+  .then(() => logger.info("connection successful"))
+  .catch(() => logger.error("connection not successful"));
 
 // catch 404 and forward to error handle
 app.use((_req, _res, next) => {

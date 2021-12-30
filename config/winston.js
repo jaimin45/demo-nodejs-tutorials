@@ -1,6 +1,6 @@
 const { createLogger, transports, format } = require("winston");
 
-const tutorialLogger = createLogger({
+const logger = createLogger({
   transports: [
     new transports.Console({
       level: "info",
@@ -13,4 +13,4 @@ const tutorialLogger = createLogger({
   ],
 });
 
-module.exports = { tutorialLogger };
+module.exports = logger;

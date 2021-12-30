@@ -10,10 +10,9 @@ const getTutorials = async (req, res) => {
       createdAt: -1,
     });
     res.status(200).send(tutorials);
-    logger.tutorialLogger.log("info", "Get All Tutorials");
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
-    logger.tutorialLogger.log("error", "Internal Server Error");
+    logger.info("Internal Server Error");
   }
 };
 
@@ -27,14 +26,12 @@ const createTutorial = async (req, res) => {
     const tutorial = new Tutorial(value);
     await tutorial.save();
     res.status(201).send();
-    logger.tutorialLogger.log("info", "New Tutorial created");
   } catch (error) {
     if (error instanceof CastError) {
       res.status(400).send({ message: "Invalid Tutorial Details" });
-      logger.tutorialLogger.log("error", "Invalid Tutorial details ");
     } else {
       res.status(500).send({ message: "Internal Server Error" });
-      logger.tutorialLogger.log("error", "Internal Server Error");
+      logger.error("Internal Server Error");
     }
   }
   return null;
@@ -53,18 +50,15 @@ const updateTutorial = async (req, res) => {
     );
     if (tutorial === null) {
       res.status(404).send({ message: "Tutorial not found" });
-      logger.tutorialLogger.log("error", "Tutorial not found");
     } else {
       res.status(204).send();
-      logger.tutorialLogger.log("info", "Tutorial updated");
     }
   } catch (error) {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Tutorial not found" });
-      logger.tutorialLogger.log("error", "Tutorial not found");
     } else {
       res.status(500).send({ message: "Internal Server Error" });
-      logger.tutorialLogger.log("error", "Internal Server Error");
+      logger.error("Internal Server Error");
     }
   }
   return null;
@@ -77,18 +71,15 @@ const deleteTutorial = async (req, res) => {
 
     if (tutorial === null) {
       res.status(404).send({ message: "Not Found Tutorial" });
-      logger.tutorialLogger.log("error", "Tutorial not found");
     } else {
       res.status(200).send();
-      logger.tutorialLogger.log("info", "Tutorial Deleted");
     }
   } catch (error) {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Tutorial not found" });
-      logger.tutorialLogger.log("error", "Tutorial not found");
     } else {
       res.status(500).send({ message: "Internal Server Error" });
-      logger.tutorialLogger.log("error", "Internal Server Error");
+      logger.error("Internal Server Error");
     }
   }
 };
@@ -99,18 +90,15 @@ const getTutorialById = async (req, res) => {
     const tutorial = await Tutorial.findById(req.params.id);
     if (tutorial === null) {
       res.status(404).send({ message: "Not Found Tutorial" });
-      logger.tutorialLogger.log("error", "Tutorial not found");
     } else {
       res.status(200).send();
-      logger.tutorialLogger.log("info", "Tutorial get by Id");
     }
   } catch (error) {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Invalid Tutorial Id" });
-      logger.tutorialLogger.log("error", "Tutorial not found");
     } else {
       res.status(500).send({ message: "Internal Server Error" });
-      logger.tutorialLogger.log("error", "Internal Server Error");
+      logger.error("Internal Server Error");
     }
   }
 };
