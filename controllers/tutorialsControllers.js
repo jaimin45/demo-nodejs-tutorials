@@ -19,17 +19,12 @@ const getTutorials = async (req, res) => {
 
 // Add new Tutorials
 const createTutorial = async (req, res) => {
-  const tutorial = new Tutorial({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published,
-  });
   try {
-    const { error } = postTutorialSchema.validate(req.body);
+    const { error, value } = postTutorialSchema.validate(req.body);
     if (error) {
       return res.status(400).send({ message: error.message });
     }
-    await postTutorialSchema.validateAsync(req.body);
+    const tutorial = new Tutorial(value);
     await tutorial.save();
     res.status(201).send();
     logger.tutorialLogger.log("info", "New Tutorial created");
