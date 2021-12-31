@@ -11,7 +11,7 @@ const getTutorials = async (req, res) => {
     });
     res.status(200).send(tutorials);
   } catch (error) {
-    logger.info("Internal Server Error");
+    logger.error("Could not get all tutorials: ", error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
