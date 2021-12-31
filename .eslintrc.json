@@ -35,7 +35,10 @@
                 "syscall",
                 "morgan",
                 "timestamps",
-                "joi"
+                "joi",
+                "winston",
+                "maxsize",
+                "logform"
             ],
             "skipIfMatch": [
                 "http://[^s]*",

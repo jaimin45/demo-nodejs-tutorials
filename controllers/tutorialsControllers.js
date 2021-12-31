@@ -1,6 +1,7 @@
 const { CastError } = require("mongoose");
 const Tutorial = require("../models/tutorials");
 const { postTutorialSchema } = require("../validations/tutorials.validations");
+const logger = require("../config/winston");
 
 // get All Tutorials
 const getTutorials = async (req, res) => {
@@ -10,29 +11,26 @@ const getTutorials = async (req, res) => {
     });
     res.status(200).send(tutorials);
   } catch (error) {
+    logger.error("Could not get all tutorials: ", error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
 // Add new Tutorials
 const createTutorial = async (req, res) => {
-  const tutorial = new Tutorial({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published,
-  });
   try {
-    const { error } = postTutorialSchema.validate(req.body);
-    if (error instanceof CastError) {
+    const { error, value } = postTutorialSchema.validate(req.body);
+    if (error) {
       return res.status(400).send({ message: error.message });
     }
-    await postTutorialSchema.validateAsync(req.body);
+    const tutorial = new Tutorial(value);
     await tutorial.save();
     res.status(201).send();
   } catch (error) {
-    if (error) {
+    if (error instanceof CastError) {
       res.status(400).send({ message: "Invalid Tutorial Details" });
     } else {
+      logger.error("Could not create tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   }
@@ -59,6 +57,7 @@ const updateTutorial = async (req, res) => {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Tutorial not found" });
     } else {
+      logger.error("Could not update tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   }
@@ -77,8 +76,9 @@ const deleteTutorial = async (req, res) => {
     }
   } catch (error) {
     if (error instanceof CastError) {
-      res.status(404).send({ message: "Invalid Tutorial Id" });
+      res.status(404).send({ message: "Tutorial not found" });
     } else {
+      logger.error("Could not delete tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   }
@@ -97,6 +97,7 @@ const getTutorialById = async (req, res) => {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Invalid Tutorial Id" });
     } else {
+      logger.error("Could not search by id tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   }
