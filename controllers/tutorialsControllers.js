@@ -11,8 +11,8 @@ const getTutorials = async (req, res) => {
     });
     res.status(200).send(tutorials);
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
     logger.info("Internal Server Error");
+    res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
@@ -30,8 +30,8 @@ const createTutorial = async (req, res) => {
     if (error instanceof CastError) {
       res.status(400).send({ message: "Invalid Tutorial Details" });
     } else {
+      logger.error("Could not create tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
-      logger.error("Internal Server Error");
     }
   }
   return null;
@@ -57,8 +57,8 @@ const updateTutorial = async (req, res) => {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Tutorial not found" });
     } else {
+      logger.error("Could not update tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
-      logger.error("Internal Server Error");
     }
   }
   return null;
@@ -78,8 +78,8 @@ const deleteTutorial = async (req, res) => {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Tutorial not found" });
     } else {
+      logger.error("Could not delete tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
-      logger.error("Internal Server Error");
     }
   }
 };
@@ -97,8 +97,8 @@ const getTutorialById = async (req, res) => {
     if (error instanceof CastError) {
       res.status(404).send({ message: "Invalid Tutorial Id" });
     } else {
+      logger.error("Could not search by id tutorial: ", error);
       res.status(500).send({ message: "Internal Server Error" });
-      logger.error("Internal Server Error");
     }
   }
 };
