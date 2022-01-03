@@ -21,7 +21,7 @@ $ nvm use 8.3.0
 ## Clone this repo (and cd to it)
 
 ```sh
-$ git clone https://github.com/kapilbarad/nodejs-project-structure.git
+$ git clone https://github.com/jaimin45/demo-nodejs-tutorials.git
 $ cd demo-nodejs-tutorials
 ```
 ## Install the dependencies and devDependencies and start the server.
@@ -32,7 +32,7 @@ npm install
 ## Load env vars
 
 ```sh
-cp .env
+MONGO_URL=" mongodb://localhost:27017/Database_name
 ```
 
 Input the desired environment variables in ``` .env ```
