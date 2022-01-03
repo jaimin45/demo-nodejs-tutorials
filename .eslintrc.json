@@ -38,7 +38,8 @@
                 "joi",
                 "winston",
                 "maxsize",
-                "logform"
+                "logform",
+                "dotenv"
             ],
             "skipIfMatch": [
                 "http://[^s]*",
