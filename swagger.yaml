@@ -14,11 +14,11 @@ consumes:
   - application/json
 produces:
   - application/json
-securityDefinitions:  
-  authentication:  
-    type: apiKey  
-    in: header  
-    name: access_token 
+securityDefinitions:
+  JWT:
+    type: apiKey
+    in: header
+    name: access_token
 paths:
   /tutorial:
     get:
@@ -50,7 +50,7 @@ paths:
         "201":
           description: New tutorials is created
           schema:
-            $ref: "#/definitions/TutorialCreateBody"
+            $ref: "#/definitions/Tutorial"
         "400":
           description: "Invalid Tutorial Id"
           schema:
@@ -59,11 +59,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-      security:
-        - authentication: []
 
   /tutorial/{id}:
-
     parameters:
       - name: id
         in: path
@@ -115,8 +112,6 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-      security:
-        - authentication: []
     get:
       tags:
         - Tutorials
@@ -144,12 +139,16 @@ paths:
           in: body
           description: Create user
           schema:
-            $ref: "#/definitions/userCreated"
+            $ref: "#/definitions/userCreateBody"
       responses:
         "201":
-          description: Created
+          description: created user
           schema:
-            $ref: "#/definitions/userCreated"
+            $ref: "#/definitions/user"
+        "400":
+          description: "Invalid user details"
+          schema:
+            $ref: "#/definitions/400Response"
         "500":
           description: "Internal Server Error"
           schema:
@@ -165,12 +164,12 @@ paths:
           required: true
           description: Update user
           schema:
-            $ref: "#/definitions/userUpdated"
+            $ref: "#/definitions/userUpdateBody"
       responses:
         "204":
           description: user is updated
         "400":
-          description: "Invalid user token"
+          description: "Invalid user details"
           schema:
             $ref: "#/definitions/400Response"
         "404":
@@ -182,7 +181,7 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
       security:
-        - authentication: []
+        - JWT: []
   /users/oauth/reset-password:
     patch:
       summary: send otp though email
@@ -197,7 +196,7 @@ paths:
 
       responses:
         "200":
-          description: otp send on email
+          description: OK
           schema:
             $ref: "#/definitions/userResetPassword"
         "400":
@@ -222,9 +221,9 @@ paths:
         - User
       responses:
         "200":
-          description: otp send on email
+          description: OK
           schema:
-            $ref: "#/definitions/userCreated"
+            $ref: "#/definitions/userCreateBody"
         "400":
           description: "Invalid user email"
           schema:
@@ -257,13 +256,13 @@ paths:
         "500":
           description: "Internal Server Error"
           schema:
-            $ref: "#/definitions/500Response"  
+            $ref: "#/definitions/500Response"
 
   /users/oauth/token:
     post:
       tags:
         - User
-      summary: Login user into system
+      summary: Login user
       parameters:
         - name: "email"
           in: "query"
@@ -276,7 +275,7 @@ paths:
           required: true
           type: "string"
       responses:
-        "201":
+        "200":
           description: OK
           schema:
             $ref: "#/definitions/OauthToken"
@@ -289,7 +288,7 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
       security:
-        - authentication: []
+        - JWT: []
 
 definitions:
   Tutorial:
@@ -355,7 +354,27 @@ definitions:
       message:
         type: string
 
-  userCreated:
+  user:
+    required:
+      - _id
+      - firstname
+      - lastname
+      - email
+      - password
+    properties:
+      _id:
+        type: string
+        uniqueItems: true
+      firstname:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+
+  userCreateBody:
     required:
       - firstname
       - lastname
@@ -371,12 +390,11 @@ definitions:
       password:
         type: string
 
-  userUpdated:
+  userUpdateBody:
     required:
       - firstname
       - lastname
       - email
-      - password
     properties:
       firstname:
         type: string
