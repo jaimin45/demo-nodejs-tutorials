@@ -188,13 +188,9 @@ paths:
           schema:
             $ref: "#/definitions/user"
         "400":
-          description: "Invalid user email"
+          description: "Invalid token"
           schema:
             $ref: "#/definitions/400Response"
-        "404":
-          description: "User not found"
-          schema:
-            $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
