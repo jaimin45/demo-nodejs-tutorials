@@ -14,6 +14,11 @@ consumes:
   - application/json
 produces:
   - application/json
+securityDefinitions:  
+  authentication:  
+    type: apiKey  
+    in: header  
+    name: access_token 
 paths:
   /tutorial:
     get:
@@ -54,8 +59,11 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - authentication: []
 
   /tutorial/{id}:
+
     parameters:
       - name: id
         in: path
@@ -107,6 +115,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - authentication: []
     get:
       tags:
         - Tutorials
@@ -124,44 +134,43 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-  /user:
+  /users:
     post:
       tags:
         - User
       summary: Register user into system
       parameters:
-        - name: user
+        - name: createUser
           in: body
           description: Create user
           schema:
-            $ref: "#/definitions/user"
+            $ref: "#/definitions/userCreated"
       responses:
         "201":
-          description: OK
+          description: Created
           schema:
-            $ref: "#/definitions/user"
+            $ref: "#/definitions/userCreated"
         "500":
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-  /user/reset-password:
-    get:
-      summary: Get a password reset token for an email address and send it to the user
+
+    patch:
       tags:
         - User
+      summary: user updated into system
       parameters:
-        - name: email
-          in: path
+        - name: updateUser
+          in: body
           required: true
-          description: id of the User
-          type: string
-      responses:
-        "200":
-          description: otp send on email
+          description: Update user
           schema:
-            $ref: "#/definitions/user"
+            $ref: "#/definitions/userUpdated"
+      responses:
+        "204":
+          description: user is updated
         "400":
-          description: "Invalid user Email"
+          description: "Invalid user token"
           schema:
             $ref: "#/definitions/400Response"
         "404":
@@ -172,23 +181,27 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-    post:
-      summary: Process the password reset.
+      security:
+        - authentication: []
+  /users/oauth/reset-password:
+    patch:
+      summary: send otp though email
       tags:
         - User
       parameters:
         - name: User
           in: body
-          description: User password reset though id using ott
+          description: User update password using old password
           schema:
             $ref: "#/definitions/userResetPassword"
+
       responses:
-        "204":
-          description: Password is updated
+        "200":
+          description: otp send on email
           schema:
-            $ref: "#/definitions/user"
+            $ref: "#/definitions/userResetPassword"
         "400":
-          description: "Invalid token"
+          description: "Invalid user Email"
           schema:
             $ref: "#/definitions/400Response"
         "500":
@@ -196,14 +209,14 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
 
-  /user/forgot-password:
+  /users/oauth/forgot-password:
     parameters:
       - name: email
         in: path
         required: true
         description: email of the User
         type: string
-    get:
+    post:
       summary: forgot password using user Id though email otp
       tags:
         - User
@@ -211,7 +224,7 @@ paths:
         "200":
           description: otp send on email
           schema:
-            $ref: "#/definitions/user"
+            $ref: "#/definitions/userCreated"
         "400":
           description: "Invalid user email"
           schema:
@@ -224,14 +237,35 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+    patch:
+      summary: Process the password reset.
+      tags:
+        - User
+      parameters:
+        - name: User
+          in: body
+          description: User password reset though id using ott
+          schema:
+            $ref: "#/definitions/userResetPassword"
+      responses:
+        "204":
+          description: password is updated
+        "400":
+          description: "Invalid token"
+          schema:
+            $ref: "#/definitions/400Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"  
 
-  /user/login:
-    get:
+  /users/oauth/token:
+    post:
       tags:
         - User
       summary: Login user into system
       parameters:
-        - name: "username"
+        - name: "email"
           in: "query"
           description: "The user name for login"
           required: true
@@ -242,18 +276,20 @@ paths:
           required: true
           type: "string"
       responses:
-        "200":
+        "201":
           description: OK
           schema:
-            $ref: "#/definitions/userLogin"
+            $ref: "#/definitions/OauthToken"
         "404":
-          description: "Tutorial not found"
+          description: "User not found"
           schema:
             $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - authentication: []
 
 definitions:
   Tutorial:
@@ -319,11 +355,10 @@ definitions:
       message:
         type: string
 
-  user:
+  userCreated:
     required:
       - firstname
       - lastname
-      - username
       - email
       - password
     properties:
@@ -331,29 +366,41 @@ definitions:
         type: string
       lastname:
         type: string
-      username:
-        type: string
       email:
         type: string
       password:
         type: string
 
-  userResetPassword:
+  userUpdated:
     required:
+      - firstname
+      - lastname
+      - email
       - password
-      - token
     properties:
-      password:
+      firstname:
         type: string
-      token:
+      lastname:
+        type: string
+      email:
         type: string
 
-  userLogin:
+  userResetPassword:
     required:
-      - username
+      - currentPassword
+      - newPassword
+    properties:
+      currentPassword:
+        type: string
+      newPassword:
+        type: string
+
+  OauthToken:
+    required:
+      - email
       - password
     properties:
-      username:
+      email:
         type: string
       password:
         type: string
