@@ -136,7 +136,7 @@ paths:
           schema:
             $ref: "#/definitions/user"
       responses:
-        "200":
+        "201":
           description: OK
           schema:
             $ref: "#/definitions/user"
@@ -144,21 +144,42 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-  /user/reset-password/{id}:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: ID of the User
-        type: string
-    patch:
-      summary: Reset password using user Id
+  /user/reset-password:
+    get:
+      summary: Get a password reset token for an email address and send it to the user
+      tags:
+        - User
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: id of the User
+          type: string
+      responses:
+        "200":
+          description: otp send on email
+          schema:
+            $ref: "#/definitions/user"
+        "400":
+          description: "Invalid user Email"
+          schema:
+            $ref: "#/definitions/400Response"
+        "404":
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/404Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+    post:
+      summary: Process the password reset.
       tags:
         - User
       parameters:
         - name: User
           in: body
-          description: User password that we want to Update
+          description: User password reset though id using ott
           schema:
             $ref: "#/definitions/userResetPassword"
       responses:
@@ -167,7 +188,7 @@ paths:
           schema:
             $ref: "#/definitions/user"
         "400":
-          description: "Invalid user Id"
+          description: "Invalid user email"
           schema:
             $ref: "#/definitions/400Response"
         "404":
@@ -179,30 +200,24 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
 
-  /user/forgot-password/{id}:
+  /user/forgot-password:
     parameters:
-      - name: id
+      - name: email
         in: path
         required: true
-        description: ID of the User
+        description: email of the User
         type: string
-    patch:
+    get:
       summary: forgot password using user Id though email otp
       tags:
         - User
-      parameters:
-        - name: User
-          in: body
-          description: User password that we want to Update
-          schema:
-            $ref: "#/definitions/userForgotPassword"
       responses:
-        "204":
-          description: Password is updated
+        "200":
+          description: otp send on email
           schema:
             $ref: "#/definitions/user"
         "400":
-          description: "Invalid user Id"
+          description: "Invalid user email"
           schema:
             $ref: "#/definitions/400Response"
         "404":
@@ -214,40 +229,6 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
 
-  /user/reset-password-ott/{id}:
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: Reset password using user Id though ott
-        type: string
-    patch:
-      summary: User with give Id
-      tags:
-        - User
-      parameters:
-        - name: User
-          in: body
-          description: User password reset though id using ott
-          schema:
-            $ref: "#/definitions/userResetPasswordOtt"
-      responses:
-        "204":
-          description: Password is updated
-          schema:
-            $ref: "#/definitions/user"
-        "400":
-          description: "Invalid user Id"
-          schema:
-            $ref: "#/definitions/400Response"
-        "404":
-          description: "User not found"
-          schema:
-            $ref: "#/definitions/404Response"
-        "500":
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/500Response"
   /user/login:
     get:
       tags:
@@ -362,23 +343,6 @@ definitions:
         type: string
 
   userResetPassword:
-    required:
-      - password
-    properties:
-      password:
-        type: string
-
-  userForgotPassword:
-    required:
-      - otp
-      - password
-    properties:
-      otp:
-        type: number
-      password:
-        type: string
-
-  userResetPasswordOtt:
     required:
       - password
       - token
