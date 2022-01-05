@@ -32,9 +32,9 @@ npm install
 ## Load env vars
 
 ```sh
-MONGO_URL=" mongodb://localhost:27017/Database_name
-PORT= 3000
-LOG_LEVEL = error or info 
+MONGO_URL="mongodb://localhost:27017/Database_name"
+PORT=3000
+LOG_LEVEL=debug
 ```
 
 Input the desired environment variables in ``` .env ```
