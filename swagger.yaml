@@ -162,7 +162,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: ID of the user
+        description: user id
         type: string
     patch:
       tags:
@@ -207,14 +207,14 @@ paths:
           in: "body"
           required: true
           schema:
-            $ref: "#/definitions/Login"
+            $ref: "#/definitions/PostOauthTokenBody"
       responses:
         "200":
           description: OK
           schema:
             $ref: "#/definitions/OauthToken"
         "401":
-          description: "Use is unauthorized "
+          description: "Unauthorized "
           schema:
             $ref: "#/definitions/401Response"
         "500":
@@ -357,7 +357,7 @@ definitions:
         type: string
         format: date-time
 
-  Login:
+  PostOauthTokenBody:
     required:
       - email
       - password
