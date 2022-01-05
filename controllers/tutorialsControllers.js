@@ -25,7 +25,7 @@ const createTutorial = async (req, res) => {
     }
     const tutorial = new Tutorial(value);
     await tutorial.save();
-    res.status(201).send();
+    res.status(201).send(tutorial);
   } catch (error) {
     if (error instanceof CastError) {
       res.status(400).send({ message: "Invalid Tutorial Details" });
@@ -91,7 +91,7 @@ const getTutorialById = async (req, res) => {
     if (tutorial === null) {
       res.status(404).send({ message: "Not Found Tutorial" });
     } else {
-      res.status(200).send();
+      res.status(200).send(tutorial);
     }
   } catch (error) {
     if (error instanceof CastError) {

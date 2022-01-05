@@ -18,9 +18,9 @@ securityDefinitions:
   JWT:
     type: apiKey
     in: header
-    name: access_token
+    name: Authorization
 paths:
-  /tutorial:
+  /tutorials:
     get:
       tags:
         - Tutorials
@@ -35,7 +35,7 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
     post:
-      summary: Create tutorials in system
+      summary: Create tutorial in system
       tags:
         - Tutorials
       parameters:
@@ -52,7 +52,7 @@ paths:
           schema:
             $ref: "#/definitions/Tutorial"
         "400":
-          description: "Invalid Tutorial Id"
+          description: "Bad request"
           schema:
             $ref: "#/definitions/400Response"
         "500":
@@ -60,7 +60,7 @@ paths:
           schema:
             $ref: "#/definitions/500Response"
 
-  /tutorial/{id}:
+  /tutorials/{id}:
     parameters:
       - name: id
         in: path
@@ -73,9 +73,9 @@ paths:
         - Tutorials
       responses:
         "200":
-          description: OK
+          description: ok
           schema:
-            $ref: "#/definitions/Tutorial"
+            $ref: "#/definitions/200Response"
         "404":
           description: "Tutorial not found"
           schema:
@@ -99,13 +99,13 @@ paths:
         "204":
           description: Tutorial is updated
           schema:
-            $ref: "#/definitions/Tutorial"
+            $ref: "#/definitions/204Response"
         "400":
           description: "Invalid Tutorial Id"
           schema:
             $ref: "#/definitions/400Response"
         "404":
-          description: "Tutorial not found"
+          description: "Bad request"
           schema:
             $ref: "#/definitions/404Response"
         "500":
@@ -139,156 +139,168 @@ paths:
           in: body
           description: Create user
           schema:
-            $ref: "#/definitions/userCreateBody"
+            $ref: "#/definitions/UserCreateBody"
       responses:
         "201":
           description: created user
           schema:
-            $ref: "#/definitions/user"
+            $ref: "#/definitions/User"
         "400":
-          description: "Invalid user details"
+          description: "Bad Request"
           schema:
             $ref: "#/definitions/400Response"
+        "409":
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the user
+        type: string
     patch:
       tags:
         - User
-      summary: user updated into system
+      summary: User updated into system
       parameters:
         - name: updateUser
           in: body
           required: true
           description: Update user
           schema:
-            $ref: "#/definitions/userUpdateBody"
+            $ref: "#/definitions/UserUpdateBody"
       responses:
         "204":
           description: user is updated
+          schema:
+            $ref: "#/definitions/204Response"
         "400":
-          description: "Invalid user details"
+          description: "Bad Request"
           schema:
             $ref: "#/definitions/400Response"
         "404":
           description: "User not found"
           schema:
             $ref: "#/definitions/404Response"
-        "500":
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/500Response"
-      security:
-        - JWT: []
-  /users/oauth/reset-password:
-    patch:
-      summary: send otp though email
-      tags:
-        - User
-      parameters:
-        - name: User
-          in: body
-          description: User update password using old password
-          schema:
-            $ref: "#/definitions/userResetPassword"
-
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: "#/definitions/userResetPassword"
-        "400":
-          description: "Invalid user Email"
-          schema:
-            $ref: "#/definitions/400Response"
-        "500":
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/500Response"
-
-  /users/oauth/forgot-password:
-    parameters:
-      - name: email
-        in: path
-        required: true
-        description: email of the User
-        type: string
-    post:
-      summary: forgot password using user Id though email otp
-      tags:
-        - User
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: "#/definitions/userCreateBody"
-        "400":
-          description: "Invalid user email"
-          schema:
-            $ref: "#/definitions/400Response"
-        "404":
-          description: "User not found"
+        "409":
+          description: "Conflict"
           schema:
             $ref: "#/definitions/404Response"
         "500":
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-    patch:
-      summary: Process the password reset.
-      tags:
-        - User
-      parameters:
-        - name: User
-          in: body
-          description: User password reset though id using ott
-          schema:
-            $ref: "#/definitions/userResetPassword"
-      responses:
-        "204":
-          description: password is updated
-        "400":
-          description: "Invalid token"
-          schema:
-            $ref: "#/definitions/400Response"
-        "500":
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/500Response"
 
-  /users/oauth/token:
+  /oauth/token:
     post:
       tags:
-        - User
+        - Authentication
       summary: Login user
       parameters:
-        - name: "email"
-          in: "query"
-          description: "The user name for login"
+        - name: Login
+          in: "body"
           required: true
-          type: "string"
-        - name: "password"
-          in: "query"
-          description: "The password for login in clear text"
-          required: true
-          type: "string"
+          schema:
+            $ref: "#/definitions/Login"
       responses:
         "200":
           description: OK
           schema:
             $ref: "#/definitions/OauthToken"
-        "404":
-          description: "User not found"
+        "401":
+          description: "Use is unauthorized "
           schema:
-            $ref: "#/definitions/404Response"
+            $ref: "#/definitions/401Response"
         "500":
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
       security:
         - JWT: []
+
+  /oauth/reset-password:
+    patch:
+      summary: Change your password
+      tags:
+        - Authentication
+      parameters:
+        - name: User
+          in: body
+          description: User update password using old password
+          schema:
+            $ref: "#/definitions/UserResetPassword"
+
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/200Response"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/400Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
+
+  /oauth/forgot-password:
+    post:
+      summary: Send otp to your email
+      tags:
+        - Authentication
+      parameters:
+        - name: Email
+          in: path
+          required: true
+          description: email of the User
+          type: string
+      responses:
+        "201":
+          description: OK
+          schema:
+            $ref: "#/definitions/201Response"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/400Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
+    patch:
+      summary: Reset password using otp.
+      tags:
+        - Authentication
+      parameters:
+        - name: User
+          in: body
+          description: User password reset though id using ott
+          schema:
+            $ref: "#/definitions/UserResetPasswordOtp"
+      responses:
+        "204":
+          description: password is updated
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/400Response"
+        "404":
+          description: "Token not found"
+          schema:
+            $ref: "#/definitions/404Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/500Response"
 
 definitions:
   Tutorial:
@@ -317,6 +329,50 @@ definitions:
         type: string
         format: date-time
 
+  User:
+    required:
+      - _id
+      - firstName
+      - lastName
+      - email
+      - password
+      - createdAt
+      - updatedAt
+    properties:
+      _id:
+        type: string
+        uniqueItems: true
+      firstname:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+  Login:
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+
+  OauthToken:
+    required: -token
+    properties:
+      token:
+        type: string
+
   TutorialCreateBody:
     required:
       - title
@@ -330,7 +386,56 @@ definitions:
       published:
         type: boolean
 
-  500Response:
+  UserCreateBody:
+    required:
+      - firstName
+      - lastName
+      - email
+      - password
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+
+  UserUpdateBody:
+    required:
+      - firstName
+      - lastName
+      - email
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      email:
+        type: string
+
+  UserResetPassword:
+    required:
+      - cuurentPassword
+      - newPassword
+    properties:
+      cuurentPassword:
+        type: string
+      newPassword:
+        type: string
+
+  UserResetPasswordOtp:
+    required:
+      - token
+      - newPassword
+    properties:
+      token:
+        type: string
+      newPassword:
+        type: string
+
+  200Response:
     type: object
     required:
       - message
@@ -338,7 +443,15 @@ definitions:
       message:
         type: string
 
-  404Response:
+  201Response:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
+  204Response:
     type: object
     required:
       - message
@@ -354,71 +467,34 @@ definitions:
       message:
         type: string
 
-  user:
+  401Response:
+    type: object
     required:
-      - _id
-      - firstname
-      - lastname
-      - email
-      - password
+      - message
     properties:
-      _id:
-        type: string
-        uniqueItems: true
-      firstname:
-        type: string
-      lastname:
-        type: string
-      email:
-        type: string
-      password:
+      message:
         type: string
 
-  userCreateBody:
+  404Response:
+    type: object
     required:
-      - firstname
-      - lastname
-      - email
-      - password
+      - message
     properties:
-      firstname:
-        type: string
-      lastname:
-        type: string
-      email:
-        type: string
-      password:
+      message:
         type: string
 
-  userUpdateBody:
+  409Response:
+    type: object
     required:
-      - firstname
-      - lastname
-      - email
+      - message
     properties:
-      firstname:
-        type: string
-      lastname:
-        type: string
-      email:
+      message:
         type: string
 
-  userResetPassword:
+  500Response:
+    type: object
     required:
-      - currentPassword
-      - newPassword
+      - message
     properties:
-      currentPassword:
-        type: string
-      newPassword:
-        type: string
-
-  OauthToken:
-    required:
-      - email
-      - password
-    properties:
-      email:
-        type: string
-      password:
+      message:
         type: string

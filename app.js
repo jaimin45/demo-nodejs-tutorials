@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
-app.use("/tutorial", userTutorial);
+app.use("/tutorials", userTutorial);
 
 // connection message
 promise
