@@ -342,9 +342,9 @@ definitions:
       _id:
         type: string
         uniqueItems: true
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string
@@ -393,9 +393,9 @@ definitions:
       - email
       - password
     properties:
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string
@@ -408,9 +408,9 @@ definitions:
       - lastName
       - email
     properties:
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string
