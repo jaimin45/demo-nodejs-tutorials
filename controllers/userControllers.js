@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
       res.status(409).send({ message: " Email already exists " });
     } else {
       await User.findByIdAndUpdate({ _id: req.params.id }, value);
-      res.status(204).send();
+      res.status(204).send({ message: "User updated" });
     }
   } catch (error) {
     if (error instanceof CastError) {

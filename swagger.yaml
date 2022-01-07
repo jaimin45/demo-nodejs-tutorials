@@ -221,8 +221,6 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-      security:
-        - JWT: []
 
   /oauth/reset-password:
     patch:
@@ -368,7 +366,8 @@ definitions:
         type: string
 
   OauthToken:
-    required: -token
+    required:
+      - token
     properties:
       token:
         type: string
@@ -417,10 +416,10 @@ definitions:
 
   UserResetPassword:
     required:
-      - cuurentPassword
+      - currentPassword
       - newPassword
     properties:
-      cuurentPassword:
+      currentPassword:
         type: string
       newPassword:
         type: string
