@@ -14,8 +14,10 @@ const createUser = async (req, res) => {
       return res.status(400).send({ message: error.message });
     }
     const user = new User(value);
-    const userEmail = await User.findOne({ email: req.body.email });
-    if (userEmail) {
+    user.password = await user.userPassword(value.password);
+    const userEmailVerify = await user.userEmailValidation(value.email);
+    // if (userEmailVerify) {
+    if (userEmailVerify) {
       res.status(409).send({ message: " Email already exists " });
     } else {
       await user.save();
@@ -39,9 +41,14 @@ const updateUser = async (req, res) => {
     if (error) {
       return res.status(400).send({ message: error.message });
     }
-    const userEmail = await User.findOne({ email: req.body.email });
-    if (userEmail) {
-      res.status(409).send({ message: " Email already exists " });
+    const tokenVerify = await User.findOne({ id: req.params.id });
+    const verifyUser = await tokenVerify.verifyUserToken(req);
+    const userEmailVerify = await verifyUser.userEmailValidation(value.email);
+    if (verifyUser.id !== req.params.id) {
+      res.status(400).send({ message: "Invalid id" });
+    } else if (userEmailVerify) {
+      res.status(409).send({ message: "Email already registered" });
+      return userEmailVerify;
     } else {
       await User.findByIdAndUpdate({ _id: req.params.id }, value);
       res.status(204).send({ message: "User updated" });
@@ -50,7 +57,7 @@ const updateUser = async (req, res) => {
     if (error instanceof CastError) {
       res.status(404).send({ message: "User not found" });
     } else {
-      logger.error("Could not update User: ", error);
+      logger.error("Couldn't update a user", error);
       res.status(500).send({ message: "Internal Server Error" });
     }
   }

@@ -196,6 +196,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
 
   /oauth/token:
     post:
@@ -257,10 +259,11 @@ paths:
         - Authentication
       parameters:
         - name: Email
-          in: path
-          required: true
+          in: body
           description: email of the User
-          type: string
+          schema:
+            $ref: "#/definitions/UserForgotPassword"
+          
       responses:
         "201":
           description: OK
@@ -422,6 +425,13 @@ definitions:
       currentPassword:
         type: string
       newPassword:
+        type: string
+
+  UserForgotPassword:
+    required:
+      - email
+    properties:
+      email:
         type: string
 
   UserResetPasswordOtp:

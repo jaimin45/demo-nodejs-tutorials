@@ -42,7 +42,11 @@
                 "dotenv",
                 "oauthSchema",
                 "oauth",
-                "jsonwebtoken"
+                "jsonwebtoken",
+                "nodemailer",
+                "otp",
+                "otpcode",
+                "bcryptjs"
             ],
             "skipIfMatch": [
                 "http://[^s]*",
