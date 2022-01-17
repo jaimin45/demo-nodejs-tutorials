@@ -59,6 +59,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
 
   /tutorials/{id}:
     parameters:
@@ -112,6 +114,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
     get:
       tags:
         - Tutorials
@@ -263,7 +267,7 @@ paths:
           description: email of the User
           schema:
             $ref: "#/definitions/UserForgotPassword"
-          
+
       responses:
         "201":
           description: OK
