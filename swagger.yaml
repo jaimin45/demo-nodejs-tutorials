@@ -59,6 +59,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
 
   /tutorials/{id}:
     parameters:
@@ -112,6 +114,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
     get:
       tags:
         - Tutorials
@@ -196,6 +200,8 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
+      security:
+        - JWT: []
 
   /oauth/token:
     post:
@@ -221,8 +227,6 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/500Response"
-      security:
-        - JWT: []
 
   /oauth/reset-password:
     patch:
@@ -259,10 +263,11 @@ paths:
         - Authentication
       parameters:
         - name: Email
-          in: path
-          required: true
+          in: body
           description: email of the User
-          type: string
+          schema:
+            $ref: "#/definitions/UserForgotPassword"
+
       responses:
         "201":
           description: OK
@@ -342,9 +347,9 @@ definitions:
       _id:
         type: string
         uniqueItems: true
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string
@@ -368,7 +373,8 @@ definitions:
         type: string
 
   OauthToken:
-    required: -token
+    required:
+      - token
     properties:
       token:
         type: string
@@ -393,9 +399,9 @@ definitions:
       - email
       - password
     properties:
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string
@@ -408,21 +414,28 @@ definitions:
       - lastName
       - email
     properties:
-      firstname:
+      firstName:
         type: string
-      lastname:
+      lastName:
         type: string
       email:
         type: string
 
   UserResetPassword:
     required:
-      - cuurentPassword
+      - currentPassword
       - newPassword
     properties:
-      cuurentPassword:
+      currentPassword:
         type: string
       newPassword:
+        type: string
+
+  UserForgotPassword:
+    required:
+      - email
+    properties:
+      email:
         type: string
 
   UserResetPasswordOtp:

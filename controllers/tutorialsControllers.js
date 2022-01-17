@@ -1,5 +1,7 @@
 const { CastError } = require("mongoose");
 const Tutorial = require("../models/tutorials");
+const User = require("../models/user");
+
 const { postTutorialSchema } = require("../validations/tutorials.validations");
 const logger = require("../config/winston");
 
@@ -23,6 +25,9 @@ const createTutorial = async (req, res) => {
     if (error) {
       return res.status(400).send({ message: error.message });
     }
+    const tokenVerify = await User.findOne(req.body);
+    await tokenVerify.verifyUserToken(req);
+
     const tutorial = new Tutorial(value);
     await tutorial.save();
     res.status(201).send(tutorial);
@@ -44,6 +49,8 @@ const updateTutorial = async (req, res) => {
     if (error) {
       return res.status(400).send({ message: error.message });
     }
+    const tokenVerify = await User.findOne(req.body);
+    await tokenVerify.verifyUserToken(req);
     const tutorial = await Tutorial.findByIdAndUpdate(
       { _id: req.params.id },
       value

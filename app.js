@@ -7,6 +7,8 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerYaml = require("yamljs");
 const { promise } = require("./init/db");
 const userTutorial = require("./routes/tutorials");
+const user = require("./routes/user");
+const oauth = require("./routes/oauth");
 const logger = require("./config/winston");
 
 const app = express();
@@ -22,6 +24,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use("/tutorials", userTutorial);
+app.use("/users", user);
+app.use("/oauth", oauth);
 
 // connection message
 promise

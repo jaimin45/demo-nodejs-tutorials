@@ -39,7 +39,14 @@
                 "winston",
                 "maxsize",
                 "logform",
-                "dotenv"
+                "dotenv",
+                "oauthSchema",
+                "oauth",
+                "jsonwebtoken",
+                "nodemailer",
+                "otp",
+                "otpcode",
+                "bcryptjs"
             ],
             "skipIfMatch": [
                 "http://[^s]*",
